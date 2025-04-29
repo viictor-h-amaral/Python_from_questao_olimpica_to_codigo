@@ -1,0 +1,19 @@
+
+barra_progresso_gif = "imgs/barra_de_progresso2.gif"
+open_barra_progresso_gif = Image.open(barra_progresso_gif)
+
+frames = open_barra_progresso_gif.n_frames
+barra_progresso.update()
+barra_progresso_gif_Object = [itk.PhotoImage(file=barra_progresso_gif, format=f"gif -index {i}") for i in range(frames)]
+
+contador_frames = 0
+mostraAnimacao = None
+def animacao(contador_frames):
+    global mostraAnimacao
+    novaImagem = barra_progresso_gif_Object[contador_frames]
+    parte_completa.configure(image = novaImagem)
+    contador_frames += 1
+    if(contador_frames == frames):
+        contador_frames = 0
+    mostraAnimacao = barra_progresso.after(100, lambda:animacao(contador_frames))
+

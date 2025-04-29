@@ -3,53 +3,8 @@ sys.path.append('C:/Users/Usuario/AppData/Local/Programs/Python/Python313')
 import combinacoesComValidacao
 import time
 import math
-import tkinter as itk
-import tkinter.font as tkFont
+from tkinter import *
 
-
-#region JANELA PRINCIPAL
-
-janela_principal = itk.Tk()
-janela_principal.title("Status da Execução")
-janela_principal.geometry("1500x500")
-
-
-#endregion JANELA PRINCIPAL
-
-#region CORES/FONTES
-
-fonte_padrao = tkFont.Font(family="Arial", size=14)
-cinza_padrao = "#5E5E5E"
-verde_padrao = "#00AE28"
-
-#endregion CORES/FONTES
-
-#region FRAME_LOGS
-
-frame_logs = itk.Frame(janela_principal, bg= cinza_padrao)
-frame_logs.pack(side="top", fill="both", expand=True, pady=5, padx=10)
-
-def Gera_Botoes(numeroAlunos, logs):
-
-    for widget in frame_logs.winfo_children():
-        widget.destroy()
-        #frame_logs.update()
-
-    for aluno in range(numeroAlunos):
-        botao_log = itk.Button(frame_logs, text=logs[aluno])
-        botao_log.configure(width=10, bg = cinza_padrao, fg = verde_padrao, font=fonte_padrao, anchor="w", padx=10)
-        botao_log.pack(side="top", fill="x", anchor="w", pady=2, padx=5)
-        janela_principal.update()
-
-#endregion FRAME_QUE_CONTEM_OS_LOGS
-
-#region FRAME_PROGRESSO
-
-#endregion FRAME_PROGRESSO
-
-
-
-#region METODOS_ALGORITMO
 
 def GeraProvas():
     provas = []
@@ -71,15 +26,11 @@ def GeraCombinacoesValidas(numeroAlunos, listaProvas):
 def GeraCombinacoes(numeroAlunos, listaProvas):
     return combinacoesComValidacao.CombinarComValidacao(numeroAlunos, listaProvas)
 
-#endregion METODOS_ALGORITMO
-
-#region LOGS
 
 def GeraLog(tempo_inicio, numeroAlunos, casosValidos):
     tempo_de_execucao = time.time() - tempo_inicio
-    log = 'Tempo de execução para ' + str(numeroAlunos) + ' alunos foi de ' + str(TempoLog(tempo_de_execucao))
-    print(log)
-    return log
+    print('tempo de execução para', numeroAlunos, 'alunos foi de', TempoLog(tempo_de_execucao))
+    print('Caso válido encontrado:', casosValidos)
 
 
 def TempoLog(tempo_total_em_segundos):
@@ -103,22 +54,16 @@ def TempoLog(tempo_total_em_segundos):
 
     return tempo_escrito
 
-#endregion LOGS
 
 def main():
-
     inicio = time.time()
     provas = GeraProvas()
     numeroAlunos = 0
-    log = []
-
     while (True):
-        #janela_principal.update()
         numeroAlunos = numeroAlunos + 1
         tempo_inicio = time.time()
         casosValidos = GeraCombinacoesValidas(numeroAlunos, provas)
-        log.append(GeraLog(tempo_inicio, numeroAlunos, casosValidos))
-        Gera_Botoes(numeroAlunos, log)
+        GeraLog(tempo_inicio, numeroAlunos, casosValidos)
         if(len(casosValidos) == 0): 
             print('E a resposta é ...', numeroAlunos - 1)
             break
@@ -127,4 +72,3 @@ def main():
 
 
 main()
-janela_principal.mainloop()
