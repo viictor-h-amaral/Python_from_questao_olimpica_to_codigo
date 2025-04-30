@@ -1,5 +1,7 @@
 import copy
 import validacaso
+import algoritmoCombinacoes as combinacoes
+
 
 casosValidos = []
 caso = []
@@ -24,6 +26,8 @@ def CombinarComControleRecursivoEValidacao(numeroDoElementoAtual, quantidadeElem
     return casosValidos
 
 def RetornarPrimeiroCasoValidoCombinacaoComControleRecursivo(numeroDoElementoAtual, quantidadeElementosATomar, listaElementos):
+    from solucao_otimizada import AtualizarTamanhoBarraProgresso
+    contador_caso = 0
     for index in range(len(listaElementos)):
         InsertAppendEmCaso(listaElementos[index], numeroDoElementoAtual)
         if (quantidadeElementosATomar > numeroDoElementoAtual):
@@ -32,6 +36,9 @@ def RetornarPrimeiroCasoValidoCombinacaoComControleRecursivo(numeroDoElementoAtu
             if(len(retornoInterno) > 0):
                 return retornoInterno
         else:
+            contador_caso += 1
+            total_casos = combinacoes.CalculaQuantidadeCombinacoes(quantidadeElementosATomar, 27)
+            AtualizarTamanhoBarraProgresso(contador_caso, total_casos)
             copiaCaso = copy.deepcopy(caso)
             if(validacaso.CasoEhValido(copiaCaso)):
                 return copiaCaso

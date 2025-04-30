@@ -1,6 +1,6 @@
 import sys
 sys.path.append('C:/Users/Usuario/AppData/Local/Programs/Python/Python313')
-import combinacoesComValidacao
+
 import time
 import math
 import tkinter as itk
@@ -11,7 +11,6 @@ import tkinter.font as tkFont
 
 janela_principal = itk.Tk()
 janela_principal.title("Status da Execução")
-janela_principal.geometry("1500x500")
 
 
 #endregion JANELA PRINCIPAL
@@ -45,9 +44,25 @@ def Gera_Botoes(numeroAlunos, logs):
 
 #region FRAME_PROGRESSO
 
+frame_progresso = itk.Frame(janela_principal, bg= cinza_padrao)
+frame_progresso.pack(side="bottom", fill="both", expand=True, pady=5, padx=10)
+
+barra_progresso = itk.Frame(frame_progresso, height=60)
+barra_progresso.pack(side="bottom", padx=10, pady=15, fill="x")
+
+parte_completa = itk.Label(barra_progresso, bg = "green", text=str(0.5*100)+'%', font=fonte_padrao)
+parte_completa.place(relwidth=0.5, relheight=1.0)
+
+def AtualizarTamanhoBarraProgresso(numeroDoCaso, totalCasos):
+    
+    for widget in barra_progresso.winfo_children():
+        widget.destroy()
+
+    percentual_casos_calculados = numeroDoCaso / totalCasos
+    parte_completa = itk.Label(barra_progresso, bg = "green", text=str(percentual_casos_calculados*100)+'%', font=fonte_padrao)
+    parte_completa.place(relwidth=percentual_casos_calculados, relheight=1.0)
+    barra_progresso.update()
 #endregion FRAME_PROGRESSO
-
-
 
 #region METODOS_ALGORITMO
 
@@ -65,11 +80,13 @@ def GeraProvas():
 
 
 def GeraCombinacoesValidas(numeroAlunos, listaProvas):
-    return combinacoesComValidacao.CombinarComValidacao(numeroAlunos, listaProvas)
+    from combinacoesComValidacao import CombinarComValidacao
+    return CombinarComValidacao(numeroAlunos, listaProvas)
             
 
 def GeraCombinacoes(numeroAlunos, listaProvas):
-    return combinacoesComValidacao.CombinarComValidacao(numeroAlunos, listaProvas)
+    from combinacoesComValidacao import CombinarComValidacao
+    return CombinarComValidacao(numeroAlunos, listaProvas)
 
 #endregion METODOS_ALGORITMO
 
@@ -112,7 +129,7 @@ def main():
     numeroAlunos = 0
     log = []
 
-    while (True):
+    while (numeroAlunos <= 5):
         #janela_principal.update()
         numeroAlunos = numeroAlunos + 1
         tempo_inicio = time.time()
