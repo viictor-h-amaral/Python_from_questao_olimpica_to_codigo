@@ -11,15 +11,17 @@ import tkinter.font as tkFont
 
 janela_principal = itk.Tk()
 janela_principal.title("Status da Execução")
-
+janela_principal.geometry("1000x500")
 
 #endregion JANELA PRINCIPAL
 
 #region CORES/FONTES
 
 fonte_padrao = tkFont.Font(family="Arial", size=14)
-cinza_padrao = "#5E5E5E"
-verde_padrao = "#00AE28"
+fonte_barra_progresso = tkFont.Font(family="Arial", size=10)
+cinza_padrao = "#1a1a1a"
+verde_padrao = "#4dff00"
+verde_barra_progresso = "#3bc202"
 
 #endregion CORES/FONTES
 
@@ -35,6 +37,7 @@ def Gera_Botoes(numeroAlunos, logs):
         #frame_logs.update()
 
     for aluno in range(numeroAlunos):
+        
         botao_log = itk.Button(frame_logs, text=logs[aluno])
         botao_log.configure(width=10, bg = cinza_padrao, fg = verde_padrao, font=fonte_padrao, anchor="w", padx=10)
         botao_log.pack(side="top", fill="x", anchor="w", pady=2, padx=5)
@@ -50,14 +53,16 @@ frame_progresso.pack(side="bottom", fill="both", expand=True, pady=5, padx=10)
 barra_progresso = itk.Frame(frame_progresso, height=60)
 barra_progresso.pack(side="bottom", padx=10, pady=15, fill="x")
 
-parte_completa = itk.Label(barra_progresso, bg = "green", text=str(0*100)+'%', font=fonte_padrao)
+parte_completa = itk.Label(barra_progresso, bg=verde_barra_progresso, fg=cinza_padrao ,text=str(0*100)+'%', font=fonte_barra_progresso)
 parte_completa.place(relwidth=0, relheight=1.0)
 
 def AtualizarTamanhoBarraProgresso(numeroDoCaso, totalCasos):
     
     percentual_casos_calculados = numeroDoCaso / totalCasos
-    parte_completa.configure(relwidth=percentual_casos_calculados)
+    parte_completa.config(text = '100%')
+    parte_completa.place_configure(relwidth=percentual_casos_calculados)
     janela_principal.update()
+    
 #endregion FRAME_PROGRESSO
 
 #region METODOS_ALGORITMO
@@ -75,9 +80,9 @@ def GeraProvas():
     return provas
 
 
-def GeraCombinacoesValidas(numeroAlunos, listaProvas, parte_completa, barra_progresso, janela_principal):
+def GeraCombinacoesValidas(numeroAlunos, listaProvas, parte_completa, barra_progresso):
     from combinacoesComValidacao import CombinarComValidacao
-    return CombinarComValidacao(numeroAlunos, listaProvas, parte_completa, barra_progresso, janela_principal)
+    return CombinarComValidacao(numeroAlunos, listaProvas, parte_completa, barra_progresso)
             
 
 def GeraCombinacoes(numeroAlunos, listaProvas):
@@ -113,6 +118,7 @@ def TempoLog(tempo_total_em_segundos):
     if (tempo_em_minutos > 0):
         tempo_escrito = tempo_escrito + str(tempo_em_minutos) + 'min '
     tempo_escrito = tempo_escrito + str(tempo_em_segundos) + 'seg'
+    tempo_escrito = tempo_escrito.replace(".", ",")
 
     return tempo_escrito
 
@@ -125,14 +131,20 @@ def main():
     numeroAlunos = 0
     log = []
 
-    while (numeroAlunos <= 5):
+    while (True):
         #janela_principal.update()
         numeroAlunos = numeroAlunos + 1
         tempo_inicio = time.time()
-        casosValidos = GeraCombinacoesValidas(numeroAlunos, provas, parte_completa, barra_progresso, janela_principal)
+        casosValidos = GeraCombinacoesValidas(numeroAlunos, provas, parte_completa, barra_progresso)
+        
+        time.sleep(0.3)
+        
         log.append(GeraLog(tempo_inicio, numeroAlunos, casosValidos))
         Gera_Botoes(numeroAlunos, log)
-        #AtualizarTamanhoBarraProgresso(1,1)
+        AtualizarTamanhoBarraProgresso(1,1)
+        
+        time.sleep(0.5)
+        
         if(len(casosValidos) == 0): 
             print('E a resposta é ...', numeroAlunos - 1)
             break
