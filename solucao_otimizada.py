@@ -50,18 +50,14 @@ frame_progresso.pack(side="bottom", fill="both", expand=True, pady=5, padx=10)
 barra_progresso = itk.Frame(frame_progresso, height=60)
 barra_progresso.pack(side="bottom", padx=10, pady=15, fill="x")
 
-parte_completa = itk.Label(barra_progresso, bg = "green", text=str(0.5*100)+'%', font=fonte_padrao)
-parte_completa.place(relwidth=0.5, relheight=1.0)
+parte_completa = itk.Label(barra_progresso, bg = "green", text=str(0*100)+'%', font=fonte_padrao)
+parte_completa.place(relwidth=0, relheight=1.0)
 
 def AtualizarTamanhoBarraProgresso(numeroDoCaso, totalCasos):
     
-    for widget in barra_progresso.winfo_children():
-        widget.destroy()
-
     percentual_casos_calculados = numeroDoCaso / totalCasos
-    parte_completa = itk.Label(barra_progresso, bg = "green", text=str(percentual_casos_calculados*100)+'%', font=fonte_padrao)
-    parte_completa.place(relwidth=percentual_casos_calculados, relheight=1.0)
-    barra_progresso.update()
+    parte_completa.configure(relwidth=percentual_casos_calculados)
+    janela_principal.update()
 #endregion FRAME_PROGRESSO
 
 #region METODOS_ALGORITMO
@@ -79,9 +75,9 @@ def GeraProvas():
     return provas
 
 
-def GeraCombinacoesValidas(numeroAlunos, listaProvas):
+def GeraCombinacoesValidas(numeroAlunos, listaProvas, parte_completa, barra_progresso, janela_principal):
     from combinacoesComValidacao import CombinarComValidacao
-    return CombinarComValidacao(numeroAlunos, listaProvas)
+    return CombinarComValidacao(numeroAlunos, listaProvas, parte_completa, barra_progresso, janela_principal)
             
 
 def GeraCombinacoes(numeroAlunos, listaProvas):
@@ -133,9 +129,10 @@ def main():
         #janela_principal.update()
         numeroAlunos = numeroAlunos + 1
         tempo_inicio = time.time()
-        casosValidos = GeraCombinacoesValidas(numeroAlunos, provas)
+        casosValidos = GeraCombinacoesValidas(numeroAlunos, provas, parte_completa, barra_progresso, janela_principal)
         log.append(GeraLog(tempo_inicio, numeroAlunos, casosValidos))
         Gera_Botoes(numeroAlunos, log)
+        #AtualizarTamanhoBarraProgresso(1,1)
         if(len(casosValidos) == 0): 
             print('E a resposta é ...', numeroAlunos - 1)
             break
