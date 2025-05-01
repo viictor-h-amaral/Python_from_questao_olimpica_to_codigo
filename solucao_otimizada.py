@@ -113,9 +113,9 @@ def GeraProvas():
     return provas
 
 
-def GeraCombinacoesValidas(numeroAlunos, listaProvas, parte_completa, barra_progresso ):
+def GeraCombinacoesValidas(numeroAlunos, listaProvas, parte_completa, barra_progresso , tempo_inicio):
     from combinacoesComValidacao import CombinarComValidacao
-    return CombinarComValidacao(numeroAlunos, listaProvas, parte_completa, barra_progresso )
+    return CombinarComValidacao(numeroAlunos, listaProvas, parte_completa, barra_progresso , tempo_inicio )
             
 
 def GeraCombinacoes(numeroAlunos, listaProvas):
@@ -184,7 +184,7 @@ def main():
         numeroAlunos = numeroAlunos + 1
         tempo_inicio = time.time()
 
-        casoValido, casosCalculados = GeraCombinacoesValidas( numeroAlunos, provas, parte_completa, barra_progresso) 
+        casoValido, casosCalculados = GeraCombinacoesValidas( numeroAlunos, provas, parte_completa, barra_progresso, inicio) 
     
         log_desse_aluno = GeraLog(tempo_inicio, numeroAlunos)
         log.append(log_desse_aluno)
@@ -194,7 +194,7 @@ def main():
         time.sleep(0.3)
         
         Gera_Botoes(numeroAlunos, log, logs_completos)
-        AtualizarTamanhoBarraProgressoELabel(numeroAlunos, 1, 1)
+        AtualizarTamanhoBarraProgressoELabel(numeroAlunos+1, 1, 1)
         
         time.sleep(0.5)
         
