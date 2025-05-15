@@ -11,14 +11,9 @@ def CasoEhValido (listaComOCaso): #retorna false caso encontre falha ou true se 
 	todasNotasQuestoes3 = []
 	
 	for prova in listaComOCaso:
-		try:
-			todasNotasQuestoes1.append( prova[0] ) #apenas notas questões 1
-			todasNotasQuestoes2.append( prova[1] ) #apenas notas questões 2
-			todasNotasQuestoes3.append( prova[2] ) #apenas notas questões 3
-		except:
-			print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-			print(listaComOCaso)
-			print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+		todasNotasQuestoes1.append( prova[0] ) #apenas notas questões 1
+		todasNotasQuestoes2.append( prova[1] ) #apenas notas questões 2
+		todasNotasQuestoes3.append( prova[2] ) #apenas notas questões 3
 	
 	indexQuestoes1SeparadasPorNota = SepararQuestoesPorNota(todasNotasQuestoes1) #ex.: [ [1,4,5] , [2,3] , [0] ]
 	indexQuestoes2SeparadasPorNota = SepararQuestoesPorNota(todasNotasQuestoes2)

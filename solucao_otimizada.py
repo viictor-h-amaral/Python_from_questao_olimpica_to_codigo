@@ -7,6 +7,7 @@ import math
 import tkinter as itk
 import tkinter.font as tkFont
 import threading
+from gerador_logs import *
 
 
 #region JANELA PRINCIPAL
@@ -14,7 +15,6 @@ import threading
 janela_principal = itk.Tk()
 janela_principal.title("Status da Execução")
 janela_principal.iconbitmap("recursos/iconeAlgoritmo.ico")
-janela_principal.geometry("1000x500")
 
 #endregion JANELA PRINCIPAL
 
@@ -56,7 +56,6 @@ def AbrirJanelaLogCompleto(numeroAlunos, logs):
     janela_logs_completos = itk.Toplevel()
     janela_logs_completos.title("Recurso de logs")
     janela_logs_completos.iconbitmap("recursos/iconeAlgoritmo.ico")
-    janela_logs_completos.geometry("400x300")
 
     label_main = itk.Label(janela_logs_completos, text="Log para "+str(numeroAlunos+1)+" alunos")
     label_main.configure(font=fonte_label_logs, fg=verde_padrao, bg=cinza_padrao, anchor="center")
@@ -78,9 +77,16 @@ frame_progresso.pack(side="bottom", fill="both", expand=True, pady=5, padx=10)
 barra_progresso = itk.Frame(frame_progresso, height=60)
 barra_progresso.pack(side="bottom", padx=10, pady=15, fill="x")
 
-label_info_barra_progresso = itk.Label(frame_progresso, bg=cinza_padrao, fg=verde_padrao , font=fonte_label_logs)
-label_info_barra_progresso.configure(text=str(0*100)+'%', anchor="w")
-label_info_barra_progresso.place(anchor="nw")
+info_barra_progresso = itk.Frame(frame_progresso, height=60, bg= cinza_padrao)
+info_barra_progresso.pack(side="top", padx=10, pady=15, fill="x")
+
+label_info_barra_progresso = itk.Label(info_barra_progresso, bg=cinza_padrao, fg=verde_padrao , font=fonte_label_logs)
+label_info_barra_progresso.configure(text='Executando algoritmo para 1 aluno', anchor="w")
+label_info_barra_progresso.grid(column=0, row=0, sticky="w")
+
+label_log_tempo = itk.Label(info_barra_progresso, bg=cinza_padrao, fg=verde_padrao , font=fonte_padrao)
+label_log_tempo.configure(text='', anchor="w")
+label_log_tempo.grid(column=0, row=1, sticky="w")
 
 parte_completa = itk.Label(barra_progresso, bg=verde_barra_progresso, fg=cinza_padrao, font=fonte_barra_progresso)
 parte_completa.place(relwidth=0, relheight=1.0)
@@ -113,9 +119,9 @@ def GeraProvas():
     return provas
 
 
-def GeraCombinacoesValidas(numeroAlunos, listaProvas, parte_completa, barra_progresso , tempo_inicio):
+def GeraCombinacoesValidas(numeroAlunos, listaProvas, parte_completa, barra_progresso , label_log_tempo,  tempo_inicio):
     from combinacoesComValidacao import CombinarComValidacao
-    return CombinarComValidacao(numeroAlunos, listaProvas, parte_completa, barra_progresso , tempo_inicio )
+    return CombinarComValidacao(numeroAlunos, listaProvas, parte_completa, barra_progresso, label_log_tempo, tempo_inicio )
             
 
 def GeraCombinacoes(numeroAlunos, listaProvas):
@@ -126,7 +132,7 @@ def GeraCombinacoes(numeroAlunos, listaProvas):
 
 #region LOGS
 
-def GeraLogCompleto(log_simples, casoValido, casosCalculados):
+def GeraLogCompleto2(log_simples, casoValido, casosCalculados):
     log_completo = []
     log_completo.append(log_simples)
     log_completo.append('Quantidade de casos calculados: ' + str(casosCalculados)) #adicionar total de casos
@@ -140,14 +146,14 @@ def GeraLogCompleto(log_simples, casoValido, casosCalculados):
 
     return log_completo
 
-def GeraLog(tempo_inicio, numeroAlunos):
+def GeraLog2(tempo_inicio, numeroAlunos):
     tempo_de_execucao = time.time() - tempo_inicio
     log = 'Tempo de execução para ' + str(numeroAlunos) + ' alunos foi de ' + str(TempoLog(tempo_de_execucao))
     print(log)
     return log
 
 
-def TempoLog(tempo_total_em_segundos):
+def TempoLog2(tempo_total_em_segundos):
 
     tempo_em_horas = tempo_total_em_segundos // 3600
     tempo_em_minutos = tempo_total_em_segundos // 60
@@ -180,11 +186,10 @@ def main():
     logs_completos = []
 
     while (True):
-        #janela_principal.update()
         numeroAlunos = numeroAlunos + 1
         tempo_inicio = time.time()
 
-        casoValido, casosCalculados = GeraCombinacoesValidas( numeroAlunos, provas, parte_completa, barra_progresso, inicio) 
+        casoValido, casosCalculados = GeraCombinacoesValidas( numeroAlunos, provas, parte_completa, barra_progresso, label_log_tempo, tempo_inicio) 
     
         log_desse_aluno = GeraLog(tempo_inicio, numeroAlunos)
         log.append(log_desse_aluno)
