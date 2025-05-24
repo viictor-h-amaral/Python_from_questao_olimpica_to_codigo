@@ -197,12 +197,12 @@ def main():
         log_completo_desse_aluno = GeraLogCompleto( log_desse_aluno , casoValido , casosCalculados )
         logs_completos.append(log_completo_desse_aluno)
 
-        #time.sleep(0.3)
+        time.sleep(0.3)
         
         Gera_Botoes(numeroAlunos, log, logs_completos)
         AtualizarTamanhoBarraProgressoELabel(numeroAlunos+1, 1, 1)
         
-        #time.sleep(0.5)
+        time.sleep(0.5)
         
         if(len(casoValido) == 0): 
             #print('E a resposta é ...', numeroAlunos - 1)

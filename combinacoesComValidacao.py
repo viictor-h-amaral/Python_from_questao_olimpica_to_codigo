@@ -86,5 +86,5 @@ def GerarEstimativaTempoRestante(casos_calculados_para_numeroAlunos, total_casos
     taxa_inversa_execucao = duracao_execucao / casos_calculados_para_numeroAlunos #t1/d1 = v^(-1)
 
     tempo_faltante = taxa_inversa_execucao*total_casos_faltantes_para_numeroAlunos
-    tempo_faltante = TempoLog(round(tempo_faltante, 0))
+    tempo_faltante = TempoLogSemSegundos(round(tempo_faltante, 0))
     return tempo_faltante #segundos
