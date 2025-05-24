@@ -68,7 +68,7 @@ def AtualizarTamanhoBarraProgresso(numeroDoCaso, totalCasos, parte_completa, bar
     relacao_casos_calculados = numeroDoCaso / totalCasos
     percentual_casos_calculados = round( 100*relacao_casos_calculados, 2)
     
-    tempo_executado = TempoLog(round((time.time() - tempo_inicio), 0))
+    tempo_executado = TempoLog(round((time.perf_counter() - tempo_inicio), 0))
     label_log_tempo.config(text=f'Executando há {tempo_executado}. Estimativa de {tempo_restante} restantes ...')
 
 
@@ -79,7 +79,7 @@ def AtualizarTamanhoBarraProgresso(numeroDoCaso, totalCasos, parte_completa, bar
 
 
 def GerarEstimativaTempoRestante(casos_calculados_para_numeroAlunos, total_casos_numeroAlunos, tempo_inicio):
-    duracao_execucao = time.time() - tempo_inicio #t1
+    duracao_execucao = time.perf_counter() - tempo_inicio #t1
 
     total_casos_faltantes_para_numeroAlunos = total_casos_numeroAlunos - casos_calculados_para_numeroAlunos #d2
 

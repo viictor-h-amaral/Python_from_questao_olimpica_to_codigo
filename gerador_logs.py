@@ -16,7 +16,7 @@ def GeraLogCompleto(log_simples, casoValido, casosCalculados):
     return log_completo
 
 def GeraLog(tempo_inicio, numeroAlunos):
-    tempo_de_execucao = time.time() - tempo_inicio
+    tempo_de_execucao = time.perf_counter() - tempo_inicio
     log = 'Tempo de execução para ' + str(numeroAlunos) + ' alunos foi de ' + str(TempoLog(tempo_de_execucao))
     print(log)
     return log

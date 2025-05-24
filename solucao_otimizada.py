@@ -13,6 +13,7 @@ from gerador_logs import *
 #region JANELA PRINCIPAL
 
 janela_principal = itk.Tk()
+janela_principal.minsize(800, 0)
 janela_principal.title("Status da Execução")
 janela_principal.iconbitmap("recursos/iconeAlgoritmo.ico")
 
@@ -147,7 +148,7 @@ def GeraLogCompleto2(log_simples, casoValido, casosCalculados):
     return log_completo
 
 def GeraLog2(tempo_inicio, numeroAlunos):
-    tempo_de_execucao = time.time() - tempo_inicio
+    tempo_de_execucao = time.perf_counter() - tempo_inicio
     log = 'Tempo de execução para ' + str(numeroAlunos) + ' alunos foi de ' + str(TempoLog(tempo_de_execucao))
     print(log)
     return log
@@ -179,7 +180,7 @@ def TempoLog2(tempo_total_em_segundos):
 
 def main():
 
-    inicio = time.time()
+    inicio = time.perf_counter()
     provas = GeraProvas()
     numeroAlunos = 0
     log = []
@@ -187,7 +188,7 @@ def main():
 
     while (True):
         numeroAlunos = numeroAlunos + 1
-        tempo_inicio = time.time()
+        tempo_inicio = time.perf_counter()
 
         casoValido, casosCalculados = GeraCombinacoesValidas( numeroAlunos, provas, parte_completa, barra_progresso, label_log_tempo, tempo_inicio) 
     
@@ -196,18 +197,18 @@ def main():
         log_completo_desse_aluno = GeraLogCompleto( log_desse_aluno , casoValido , casosCalculados )
         logs_completos.append(log_completo_desse_aluno)
 
-        time.sleep(0.3)
+        #time.sleep(0.3)
         
         Gera_Botoes(numeroAlunos, log, logs_completos)
         AtualizarTamanhoBarraProgressoELabel(numeroAlunos+1, 1, 1)
         
-        time.sleep(0.5)
+        #time.sleep(0.5)
         
         if(len(casoValido) == 0): 
             #print('E a resposta é ...', numeroAlunos - 1)
             break
         print(casoValido)
-    fim = time.time()
+    fim = time.perf_counter()
     #print('tempo total de execução:', TempoLog(fim - inicio))
 
 def main_thread():
