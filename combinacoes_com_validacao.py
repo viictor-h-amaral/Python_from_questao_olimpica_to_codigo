@@ -64,6 +64,7 @@ def insert_append_em_caso(elemento_inserido, posicao_insercao):
 def limpar_cache():
     casos_validos.clear()
     caso.clear()
+    global contador_caso
     contador_caso = 0
 
 def atualizar_tamanho_barra_progresso(numero_do_caso, total_casos, parte_completa, barra_progresso, label_log_tempo, tempo_inicio, tempo_restante):

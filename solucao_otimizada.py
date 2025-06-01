@@ -49,7 +49,7 @@ def gera_botoes(numero_alunos, logs, logs_completos):
     for aluno in range(numero_alunos):
         
         botao_log = itk.Button(frame_logs, text=logs[aluno], bg = cinza_padrao, fg = verde_padrao)
-        botao_log.configure(width=10,  font=fonte_padrao, anchor="w", padx=10, command=lambda p1=(aluno), p2=(logs_completos[aluno]):AbrirJanelaLogCompleto(p1, p2))
+        botao_log.configure(width=10,  font=fonte_padrao, anchor="w", padx=10, command=lambda p1=(aluno), p2=(logs_completos[aluno]):abrir_janela_log_completo(p1, p2))
         botao_log.pack(side="top", fill="x", anchor="w", pady=2, padx=5)
         janela_principal.update()
 
