@@ -1,28 +1,28 @@
 import time
 import math
 
-def GeraLogCompleto(log_simples, casoValido, casosCalculados):
+def gera_log_completo(log_simples, caso_valido, casos_calculados):
     log_completo = []
     log_completo.append(log_simples)
-    log_completo.append('Quantidade de casos calculados: ' + str(casosCalculados)) #adicionar total de casos
+    log_completo.append('Quantidade de casos calculados: ' + str(casos_calculados)) #adicionar total de casos
 
-    if(len(casoValido) > 0):
-        casoValido = 'Primeiro caso válido encontrado: '+ str(casoValido)
+    if(len(caso_valido) > 0):
+        caso_valido = 'Primeiro caso válido encontrado: '+ str(caso_valido)
     else:
-        casoValido = 'Não há casos válidos...'
+        caso_valido = 'Não há casos válidos...'
 
-    log_completo.append(casoValido)
+    log_completo.append(caso_valido)
 
     return log_completo
 
-def GeraLog(tempo_inicio, numeroAlunos):
+def gera_log(tempo_inicio, numero_alunos):
     tempo_de_execucao = time.perf_counter() - tempo_inicio
-    log = 'Tempo de execução para ' + str(numeroAlunos) + ' alunos foi de ' + str(TempoLog(tempo_de_execucao))
+    log = 'Tempo de execução para ' + str(numero_alunos) + ' alunos foi de ' + str(tempo_log(tempo_de_execucao))
     print(log)
     return log
 
 
-def TempoLog(tempo_total_em_segundos):
+def tempo_log(tempo_total_em_segundos):
 
     tempo_em_horas = int(tempo_total_em_segundos // 3600)
     tempo_em_minutos = int( (tempo_total_em_segundos - tempo_em_horas*3600) // 60)
@@ -51,7 +51,7 @@ def TempoLog(tempo_total_em_segundos):
 
     return tempo_escrito
 
-def TempoLogSemSegundos(tempo_total_em_segundos):
+def tempo_log_sem_segundos(tempo_total_em_segundos):
     tempo_em_horas = int(tempo_total_em_segundos // 3600)
     tempo_em_minutos = int( (tempo_total_em_segundos - tempo_em_horas*3600) // 60)
     tempo_em_segundos = tempo_total_em_segundos - tempo_em_horas*3600 - tempo_em_minutos*60
